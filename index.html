@@ -730,15 +730,10 @@
         <div class="section">
             <h2>Upload Photo</h2>
             <input type="file" accept="image/*" id="imageInput" class="file-input">
-            <div style="margin-top: 15px; text-align: center;">
-                <label style="display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 500;">
-                    <input type="checkbox" id="autoRemoveBg" checked style="transform: scale(1.2);">
-                    🤖 Auto remove background with AI
-                </label>
-            </div>
-            <div id="imagePreview" style="display: none; margin-top: 20px; text-align: center;">
-                <h3 style="margin-bottom: 10px; color: #2d3748;">Your Photo:</h3>
-                <img id="previewImage" style="max-width: 300px; max-height: 300px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: 2px solid #e2e8f0;">
+
+            <div id="imagePreview" style="display: none; margin-top: 15px; text-align: center;">
+                <p style="margin-bottom: 8px; color: #2d3748; font-size: 14px;">Uploaded Photo:</p>
+                <img id="previewImage" style="width: 120px; height: 120px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); border: 2px solid #e2e8f0;">
             </div>
             <div id="editSection" style="display: none; margin-top: 20px; text-align: center;">
                 <button class="action-btn" style="background: linear-gradient(135deg, #4CAF50, #45a049); color: white; margin: 5px;" onclick="quickRemoveBackground()">🤖 Remove Background</button>
@@ -854,13 +849,8 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     originalImage = e.target.result;
-                    const autoRemove = document.getElementById('autoRemoveBg').checked;
-                    if (autoRemove) {
-                        removeBackground(e.target.result);
-                    } else {
-                        selectedImage = e.target.result;
-                        updatePhotoGrid();
-                    }
+                    selectedImage = e.target.result;
+                    updatePhotoGrid();
                     document.getElementById('editSection').style.display = 'block';
                 };
                 reader.readAsDataURL(file);
