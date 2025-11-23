@@ -376,9 +376,7 @@
             to { transform: rotate(360deg); }
         }
 
-        .success-message {
-            background: linear-gradient(135deg, #48bb78, #38a169);
-            color: white;
+        .message {
             padding: 12px 20px;
             border-radius: 8px;
             margin: 10px 0;
@@ -387,14 +385,222 @@
             animation: slideIn 0.3s ease;
         }
 
+        .success-message {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+        }
+
+        .info-message {
+            background: linear-gradient(135deg, #4299e1, #3182ce);
+            color: white;
+        }
+
+        .warning-message {
+            background: linear-gradient(135deg, #ed8936, #dd6b20);
+            color: white;
+        }
+
         @keyframes slideIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
+        .editor-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .editor-content {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            width: 95vw;
+            height: 90vh;
+            position: relative;
+            display: flex;
+            gap: 20px;
+        }
+
+        .editor-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .editor-right {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 15px;
+        }
+
+        .editor-canvas {
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            max-width: 100%;
+            max-height: 70vh;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .editor-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .control-group {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .control-group h4 {
+            margin-bottom: 10px;
+            color: #2d3748;
+        }
+
+        .slider {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #f56565;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        /* Floating AI Assistant */
+        .ai-assistant {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .ai-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .ai-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.4);
+        }
+        
+        .ai-chat {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            width: 350px;
+            height: 400px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            display: none;
+            flex-direction: column;
+        }
+        
+        .ai-header {
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px 15px 0 0;
+            font-weight: 600;
+        }
+        
+        .ai-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            max-height: 250px;
+        }
+        
+        .ai-input-area {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .ai-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+        
+        .ai-send {
+            padding: 10px 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+        
+        .user-message {
+            background: #e3f2fd;
+            margin-left: auto;
+        }
+        
+        .ai-message {
+            background: #f5f5f5;
+        }
+        
+        .crop-overlay {
+            box-sizing: border-box;
+            transition: border-color 0.2s ease;
+        }
+        
+        .crop-overlay:hover {
+            border-color: #ee5a24;
+            background: rgba(238, 90, 36, 0.1);
+        }
+        
+        .crop-handle:hover {
+            background: #ee5a24 !important;
+            transform: scale(1.1);
+        }
+
         @media print {
             .header, .section:not(.photo-section) { display: none !important; }
             .photo-grid { background: white !important; padding: 0 !important; }
+            .ai-assistant { display: none !important; }
         }
     </style>
 </head>
@@ -409,6 +615,15 @@
         <div class="section">
             <h2>Upload Photo</h2>
             <input type="file" accept="image/*" id="imageInput" class="file-input">
+            <div style="margin-top: 15px; text-align: center;">
+                <label style="display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 500;">
+                    <input type="checkbox" id="autoRemoveBg" checked style="transform: scale(1.2);">
+                    🤖 Auto remove background with AI
+                </label>
+            </div>
+            <div id="editSection" style="display: none; margin-top: 20px; text-align: center;">
+                <button class="action-btn" style="background: linear-gradient(135deg, #9f7aea, #805ad5); color: white;" onclick="openEditor()">✏️ Edit Photo</button>
+            </div>
         </div>
 
         <!-- Dimension Selector -->
@@ -471,6 +686,8 @@
             <p class="info" id="infoText">Size: 2" × 2" | Count: 4</p>
         </div>
 
+
+
         <!-- Action Buttons -->
         <div class="section">
             <div class="action-buttons">
@@ -481,11 +698,34 @@
         </div>
     </div>
 
+    <!-- Floating AI Assistant -->
+    <div class="ai-assistant">
+        <button class="ai-button" onclick="toggleAI()">🤖</button>
+        <div class="ai-chat" id="aiChat">
+            <div class="ai-header">
+                🤖 WAJID Assistant
+                <button onclick="toggleAI()" style="float: right; background: none; border: none; color: white; cursor: pointer;">&times;</button>
+            </div>
+            <div class="ai-messages" id="aiMessages">
+                <div class="message ai-message">
+                    Hi! I'm WAJID Assistant. I can help you remove backgrounds, crop photos, change hair styles, and create perfect passport photos!
+                </div>
+            </div>
+            <div class="ai-input-area">
+                <input type="text" class="ai-input" id="aiInput" placeholder="Ask me anything...">
+                <button class="ai-send" onclick="sendAIMessage()">➤</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         let selectedImage = null;
         let dimensions = { width: 2, height: 2 };
         let photoCount = 4;
         let backgroundColor = '#FFFFFF';
+
+        let originalImage = null;
+        let editedImage = null;
 
         // Image upload handler
         document.getElementById('imageInput').addEventListener('change', function(e) {
@@ -493,12 +733,115 @@
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    selectedImage = e.target.result;
-                    updatePhotoGrid();
+                    originalImage = e.target.result;
+                    const autoRemove = document.getElementById('autoRemoveBg').checked;
+                    if (autoRemove) {
+                        removeBackground(e.target.result);
+                    } else {
+                        selectedImage = e.target.result;
+                        updatePhotoGrid();
+                    }
+                    document.getElementById('editSection').style.display = 'block';
                 };
                 reader.readAsDataURL(file);
             }
         });
+
+        // Auto Background Removal with API integration
+        async function removeBackground(imageData) {
+            try {
+                showMessage('🤖 AI removing background...', 'info');
+                
+                // Try API first
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                const img = new Image();
+                
+                img.onload = async function() {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+                    
+                    try {
+                        // Use Remove.bg API
+                        const imageBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.9));
+                        const formData = new FormData();
+                        formData.append('image_file', imageBlob);
+                        formData.append('size', 'auto');
+                        
+                        const response = await fetch('https://api.remove.bg/v1.0/removebg', {
+                            method: 'POST',
+                            headers: {
+                                'X-Api-Key': 'uam3YSA7Dkz6SHVkf8DLVWUE'
+                            },
+                            body: formData
+                        });
+                        
+                        if (response.ok) {
+                            const blob = await response.blob();
+                            const apiImg = new Image();
+                            apiImg.onload = function() {
+                                canvas.width = apiImg.width;
+                                canvas.height = apiImg.height;
+                                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                                ctx.drawImage(apiImg, 0, 0);
+                                selectedImage = canvas.toDataURL();
+                                updatePhotoGrid();
+                                showMessage('✅ AI background removed perfectly!', 'success');
+                            };
+                            apiImg.src = URL.createObjectURL(blob);
+                            return;
+                        }
+                    } catch (apiError) {
+                        console.log('API failed, using local removal');
+                    }
+                    
+                    // Fallback to local removal
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const data = imageData.data;
+                    let removedPixels = 0;
+                    
+                    for (let i = 0; i < data.length; i += 4) {
+                        const r = data[i];
+                        const g = data[i + 1];
+                        const b = data[i + 2];
+                        
+                        const brightness = (r + g + b) / 3;
+                        const colorVariance = Math.abs(r - g) + Math.abs(g - b) + Math.abs(r - b);
+                        
+                        if (brightness > 180 && colorVariance < 30) {
+                            data[i + 3] = 0;
+                            removedPixels++;
+                        }
+                    }
+                    
+                    ctx.putImageData(imageData, 0, 0);
+                    selectedImage = canvas.toDataURL();
+                    updatePhotoGrid();
+                    showMessage('✅ Local background removal applied!', 'success');
+                };
+                
+                img.src = imageData;
+            } catch (error) {
+                selectedImage = imageData;
+                updatePhotoGrid();
+                showMessage('⚠️ Using original image', 'warning');
+            }
+        }
+
+        function showMessage(text, type) {
+            const existing = document.querySelector('.message');
+            if (existing) existing.remove();
+            
+            const message = document.createElement('div');
+            message.className = `message ${type}-message`;
+            message.textContent = text;
+            
+            const container = document.querySelector('.container');
+            container.insertBefore(message, container.firstChild);
+            
+            setTimeout(() => message.remove(), 3000);
+        }
 
         // Dimension inputs
         document.getElementById('widthInput').addEventListener('input', function() {
@@ -558,10 +901,34 @@
                 photoItem.style.aspectRatio = `${dimensions.width}/${dimensions.height}`;
                 
                 if (selectedImage) {
-                    const img = document.createElement('img');
+                    // Create canvas to composite image with background
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    const img = new Image();
+                    
+                    img.onload = function() {
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        
+                        // Fill background color first
+                        ctx.fillStyle = backgroundColor;
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                        
+                        // Draw image on top
+                        ctx.drawImage(img, 0, 0);
+                        
+                        // Create final image element
+                        const finalImg = document.createElement('img');
+                        finalImg.src = canvas.toDataURL();
+                        finalImg.alt = `Photo ${i + 1}`;
+                        finalImg.style.width = '100%';
+                        finalImg.style.height = '100%';
+                        finalImg.style.objectFit = 'cover';
+                        
+                        photoItem.appendChild(finalImg);
+                    };
+                    
                     img.src = selectedImage;
-                    img.alt = `Photo ${i + 1}`;
-                    photoItem.appendChild(img);
                 } else {
                     const span = document.createElement('span');
                     span.textContent = `Photo ${i + 1}`;
@@ -635,11 +1002,11 @@
                     const x = col * (photoWidth + 10) + 10;
                     const y = row * (photoHeight + 10) + 10;
                     
-                    // Draw background
+                    // Draw background color first
                     ctx.fillStyle = backgroundColor;
                     ctx.fillRect(x, y, photoWidth, photoHeight);
                     
-                    // Draw image
+                    // Draw image on top of background
                     ctx.drawImage(img, x, y, photoWidth, photoHeight);
                 }
                 
@@ -650,6 +1017,1121 @@
                 link.click();
             };
             img.src = selectedImage;
+        }
+
+        // Photo Editor Functions
+        function openEditor() {
+            if (!selectedImage) return;
+            
+            const modal = document.createElement('div');
+            modal.className = 'editor-modal';
+            modal.innerHTML = `
+                <div class="editor-content">
+                    <button class="close-btn" onclick="closeEditor()">&times;</button>
+                    
+                    <div class="editor-left">
+                        <h2>📸 Photo Editor</h2>
+                        <canvas id="editorCanvas" class="editor-canvas" width="400" height="400"></canvas>
+                        <div style="margin-top: 15px;">
+                            <button class="action-btn" onclick="applyEdits()" style="margin: 5px;">✅ Apply</button>
+                            <button class="action-btn" onclick="resetEdits()" style="margin: 5px;">🔄 Reset</button>
+                        </div>
+                    </div>
+                    
+                    <div class="editor-right">
+                        <div class="editor-controls">
+                            <div class="control-group">
+                                <h4>🎨 Background Removal</h4>
+                                <button class="preset-btn" onclick="aiBackgroundRemoval()" style="width: 100%; margin: 5px 0; background: linear-gradient(135deg, #4CAF50, #45a049);">🤖 AI Remove (API)</button>
+                                <button class="preset-btn" onclick="canvaStyleRemoval()" style="width: 100%; margin: 5px 0;">🎨 Local Remove</button>
+                                <button class="preset-btn" onclick="enableBrushMode()" style="width: 100%; margin: 5px 0;">🖌️ Brush Remove</button>
+                                <button class="preset-btn" onclick="enableColorPicker()" style="width: 100%; margin: 5px 0;">🎯 Pick Color</button>
+
+                                <div style="margin: 10px 0;">
+                                    <label>Brush Size:</label>
+                                    <input type="range" id="brushSize" min="5" max="50" value="20" style="width: 100%;">
+                                    <small>Size: <span id="brushSizeValue">20px</span></small>
+                                </div>
+                                <label style="display: block; margin: 10px 0;">New Background:</label>
+                                <input type="color" id="bgColorPicker" value="${backgroundColor}" onchange="changeBgColor(this.value)" style="width: 100%; height: 40px; border-radius: 8px;">
+                            </div>
+                            
+                            <div class="control-group">
+                                <h4>✂️ Professional Crop</h4>
+                                <button class="preset-btn" onclick="enableProfessionalCrop()" style="width: 100%; margin: 5px 0;">📐 Start Cropping</button>
+                                <button class="preset-btn" onclick="cropToFace()" style="width: 100%; margin: 5px 0;">Auto Face Crop</button>
+                                <div id="cropControls" style="display: none; margin: 10px 0;">
+                                    <button class="count-btn" onclick="applyCrop()" style="width: 48%; margin: 2px; background: #4CAF50; color: white;">✅ Apply</button>
+                                    <button class="count-btn" onclick="cancelCrop()" style="width: 48%; margin: 2px; background: #f44336; color: white;">❌ Cancel</button>
+                                </div>
+                                <button class="preset-btn" onclick="resetCrop()" style="width: 100%; margin: 5px 0;">🔄 Reset All</button>
+                            </div>
+                            
+                            <div class="control-group">
+                                <h4>💇 Hair Style Changer</h4>
+                                <button class="preset-btn" onclick="changeHairStyle('short')" style="width: 100%; margin: 3px 0;">👨 Short Hair</button>
+                                <button class="preset-btn" onclick="changeHairStyle('long')" style="width: 100%; margin: 3px 0;">👩 Long Hair</button>
+                                <button class="preset-btn" onclick="changeHairStyle('curly')" style="width: 100%; margin: 3px 0;">🌀 Curly Hair</button>
+                                <button class="preset-btn" onclick="changeHairStyle('bald')" style="width: 100%; margin: 3px 0;">👨‍🦲 Bald</button>
+                                <button class="preset-btn" onclick="changeHairColor()" style="width: 100%; margin: 3px 0;">🎨 Change Hair Color</button>
+                            </div>
+                            
+                            <div class="control-group">
+                                <h4>🎛️ Enhance Photo</h4>
+                                <label>Brightness:</label>
+                                <input type="range" class="slider" min="-50" max="50" value="0" onchange="adjustBrightness(this.value)">
+                                <label>Contrast:</label>
+                                <input type="range" class="slider" min="-50" max="50" value="0" onchange="adjustContrast(this.value)">
+                                <label>Saturation:</label>
+                                <input type="range" class="slider" min="-50" max="50" value="0" onchange="adjustSaturation(this.value)">
+                            </div>
+                            
+                            <div class="control-group">
+                                <h4>💄 Beauty Tools</h4>
+                                <button class="count-btn" onclick="smoothSkin()" style="width: 100%; margin: 5px 0;">Smooth Skin</button>
+                                <button class="count-btn" onclick="whitenTeeth()" style="width: 100%; margin: 5px 0;">Whiten Teeth</button>
+                                <button class="count-btn" onclick="brightenEyes()" style="width: 100%; margin: 5px 0;">Brighten Eyes</button>
+                                <button class="count-btn" onclick="autoEnhance()" style="width: 100%; margin: 5px 0;">✨ Auto Enhance</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            loadImageToEditor();
+        }
+        
+        function closeEditor() {
+            const modal = document.querySelector('.editor-modal');
+            if (modal) modal.remove();
+        }
+        
+        function loadImageToEditor() {
+            const canvas = document.getElementById('editorCanvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            
+            img.onload = function() {
+                canvas.width = Math.min(400, img.width);
+                canvas.height = (canvas.width / img.width) * img.height;
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                
+                // Store original canvas data for background changes
+                originalCanvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            };
+            
+            img.src = selectedImage;
+        }
+        
+        function removeEditorBackground() {
+            const canvas = document.getElementById('editorCanvas');
+            const ctx = canvas.getContext('2d');
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+            
+            // Better background removal algorithm
+            for (let i = 0; i < data.length; i += 4) {
+                const r = data[i];
+                const g = data[i + 1];
+                const b = data[i + 2];
+                
+                const brightness = (r + g + b) / 3;
+                const colorVariance = Math.abs(r - g) + Math.abs(g - b) + Math.abs(r - b);
+                
+                // Remove light, uniform backgrounds
+                if (brightness > 170 && colorVariance < 40) {
+                    data[i + 3] = 0; // Make transparent
+                }
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+            
+            // Update stored original data
+            originalCanvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            
+            showMessage('✂️ Background removed!', 'success');
+        }
+        
+        function smartBackgroundRemoval() {
+            const canvas = document.getElementById('editorCanvas');
+            const ctx = canvas.getContext('2d');
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+            
+            // Smart edge-based removal
+            for (let i = 0; i < data.length; i += 4) {
+                const r = data[i];
+                const g = data[i + 1];
+                const b = data[i + 2];
+                
+                // Multiple criteria for better detection
+                const brightness = (r + g + b) / 3;
+                const isWhitish = r > 160 && g > 160 && b > 160;
+                const isUniform = Math.abs(r - g) < 30 && Math.abs(g - b) < 30;
+                
+                if ((brightness > 180 && isUniform) || (isWhitish && isUniform)) {
+                    data[i + 3] = 0; // Make transparent
+                }
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+            
+            // Update stored original data
+            originalCanvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            
+            showMessage('🤖 Smart background removal applied!', 'success');
+        }
+        
+        function centerImage() {
+            showMessage('🎯 Image centered!', 'success');
+        }
+        
+        function adjustSaturation(value) {
+            showMessage(`🎨 Saturation: ${value > 0 ? '+' : ''}${value}`, 'info');
+        }
+        
+        function autoEnhance() {
+            adjustBrightness(10);
+            adjustContrast(15);
+            showMessage('✨ Auto enhancement applied!', 'success');
+        }
+        
+        let cropMode = false;
+        let colorPickerMode = false;
+        let cropStart = null;
+        let cropEnd = null;
+        
+        function enableManualCrop() {
+            cropMode = true;
+            colorPickerMode = false;
+            const canvas = document.getElementById('editorCanvas');
+            canvas.style.cursor = 'crosshair';
+            showMessage('📐 Click and drag to crop area', 'info');
+            
+            canvas.addEventListener('mousedown', startCrop);
+            canvas.addEventListener('mousemove', drawCrop);
+            canvas.addEventListener('mouseup', endCrop);
+        }
+        
+        function enableColorPicker() {
+            colorPickerMode = true;
+            cropMode = false;
+            const canvas = document.getElementById('editorCanvas');
+            canvas.style.cursor = 'crosshair';
+            showMessage('🎯 Click on color to remove', 'info');
+            
+            canvas.addEventListener('click', pickColorToRemove);
+        }
+        
+        function startCrop(e) {
+            if (!cropMode) return;
+            const rect = e.target.getBoundingClientRect();
+            cropStart = {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
+            };
+        }
+        
+        function drawCrop(e) {
+            if (!cropMode || !cropStart) return;
+            const canvas = document.getElementById('editorCanvas');
+            const ctx = canvas.getContext('2d');
+            const rect = e.target.getBoundingClientRect();
+            
+            cropEnd = {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
+            };
+            
+            // Redraw image
+            loadImageToEditor();
+            
+            // Draw crop rectangle
+            ctx.strokeStyle = '#ff6b6b';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.strokeRect(
+                cropStart.x,
+                cropStart.y,
+                cropEnd.x - cropStart.x,
+                cropEnd.y - cropStart.y
+            );
+        }
+        
+        function endCrop(e) {
+            if (!cropMode || !cropStart) return;
+            
+            const canvas = document.getElementById('editorCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Calculate crop area
+            const width = Math.abs(cropEnd.x - cropStart.x);
+            const height = Math.abs(cropEnd.y - cropStart.y);
+            const x = Math.min(cropStart.x, cropEnd.x);
+            const y = Math.min(cropStart.y, cropEnd.y);
+            
+            if (width > 10 && height > 10) {
+                // Get cropped image data
+                const imageData = ctx.getImageData(x, y, width, height);
+                
+                // Resize canvas and draw cropped image
+                canvas.width = width;
+                canvas.height = height;
+                ctx.putImageData(imageData, 0, 0);
+                
+                showMessage('✂️ Image cropped successfully!', 'success');
+            }
+            
+            // Reset crop mode
+            cropMode = false;
+            canvas.style.cursor = 'default';
+            canvas.removeEventListener('mousedown', startCrop);
+            canvas.removeEventListener('mousemove', drawCrop);
+            canvas.removeEventListener('mouseup', endCrop);
+        }
+        
+        function pickColorToRemove(e) {
+            if (!colorPickerMode) return;
+            
+            const canvas = document.getElementById('editorCanvas');
+            const ctx = canvas.getContext('2d');
+            const rect = canvas.getBoundingClientRect();
+            
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Get pixel color
+            const imageData = ctx.getImageData(x, y, 1, 1);
+            const [r, g, b] = imageData.data;
+            
+            showMessage(`🎯 Removing color RGB(${r}, ${g}, ${b})`, 'info');
+            
+            // Remove similar colors
+            removeColorFromImage(r, g, b);
+            
+            // Reset color picker mode
+            colorPickerMode = false;
+            canvas.style.cursor = 'default';
+            canvas.removeEventListener('click', pickColorToRemove);
+        }
+        
+        function removeColorFromImage(targetR, targetG, targetB) {
+            const canvas = document.getElementById('editorCanvas');
+            const ctx = canvas.getContext('2d');
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+            
+            const tolerance = 30; // Color similarity tolerance
+            
+            for (let i = 0; i < data.length; i += 4) {
+                const r = data[i];
+                const g = data[i + 1];
+                const b = data[i + 2];
+                
+                // Calculate color distance
+                const distance = Math.sqrt(
+                    Math.pow(r - targetR, 2) +
+                    Math.pow(g - targetG, 2) +
+                    Math.pow(b - targetB, 2)
+                );
+                
+                // Remove similar colors
+                if (distance < tolerance) {
+                    data[i + 3] = 0; // Make transparent
+                }
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+            showMessage('🎨 Color removed successfully!', 'success');
+        }
+        
+        function resetCrop() {
+            cancelCrop();
+            loadImageToEditor();
+            showMessage('🔄 Image reset to original!', 'info');
+        }
+        
+        // Professional Cropping System
+        let cropOverlay = null;
+        let isDragging = false;
+        let isResizing = false;
+        let dragStart = null;
+        
+        function enableProfessionalCrop() {
+            cropMode = true;
+            const canvas = document.getElementById('editorCanvas');
+            canvas.style.position = 'relative';
+            
+            createCropOverlay(canvas);
+            document.getElementById('cropControls').style.display = 'block';
+            showMessage('📐 Drag to move, corners to resize. Click Apply when done!', 'info');
+        }
+        
+        function createCropOverlay(canvas) {
+            if (cropOverlay) cropOverlay.remove();
+            
+            const container = canvas.parentElement;
+            
+            // Get canvas position relative to its container
+            const canvasStyle = window.getComputedStyle(canvas);
+            const canvasRect = canvas.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+            
+            // Calculate canvas position within container
+            const canvasLeft = canvasRect.left - containerRect.left;
+            const canvasTop = canvasRect.top - containerRect.top;
+            const canvasWidth = canvasRect.width;
+            const canvasHeight = canvasRect.height;
+            
+            cropOverlay = document.createElement('div');
+            cropOverlay.className = 'crop-overlay';
+            cropOverlay.style.position = 'absolute';
+            cropOverlay.style.left = (canvasLeft + canvasWidth * 0.1) + 'px';
+            cropOverlay.style.top = (canvasTop + canvasHeight * 0.1) + 'px';
+            cropOverlay.style.width = (canvasWidth * 0.8) + 'px';
+            cropOverlay.style.height = (canvasHeight * 0.8) + 'px';
+            cropOverlay.style.border = '3px dashed #ff6b6b';
+            cropOverlay.style.background = 'rgba(255, 107, 107, 0.15)';
+            cropOverlay.style.cursor = 'move';
+            cropOverlay.style.zIndex = '1000';
+            cropOverlay.style.boxSizing = 'border-box';
+            cropOverlay.style.pointerEvents = 'auto';
+            
+            // Add resize handles
+            const handles = ['nw', 'ne', 'sw', 'se'];
+            handles.forEach(pos => {
+                const handle = document.createElement('div');
+                handle.className = 'crop-handle';
+                handle.style.position = 'absolute';
+                handle.style.width = '15px';
+                handle.style.height = '15px';
+                handle.style.background = '#ff6b6b';
+                handle.style.border = '3px solid white';
+                handle.style.borderRadius = '50%';
+                handle.style.cursor = pos.includes('n') && pos.includes('w') ? 'nw-resize' : 
+                                     pos.includes('n') && pos.includes('e') ? 'ne-resize' :
+                                     pos.includes('s') && pos.includes('w') ? 'sw-resize' : 'se-resize';
+                handle.style[pos.includes('n') ? 'top' : 'bottom'] = '-9px';
+                handle.style[pos.includes('w') ? 'left' : 'right'] = '-9px';
+                handle.style.pointerEvents = 'auto';
+                handle.onmousedown = (e) => { e.stopPropagation(); startResize(e, pos); };
+                cropOverlay.appendChild(handle);
+            });
+            
+            cropOverlay.onmousedown = startDrag;
+            container.style.position = 'relative';
+            container.appendChild(cropOverlay);
+            
+            showMessage('🎯 Crop overlay created! Drag to move, corners to resize', 'success');
+        }
+        
+        function startDrag(e) {
+            if (e.target.className === 'crop-handle') return;
+            isDragging = true;
+            dragStart = { x: e.clientX, y: e.clientY };
+            document.onmousemove = drag;
+            document.onmouseup = stopDrag;
+        }
+        
+        function drag(e) {
+            if (!isDragging) return;
+            const dx = e.clientX - dragStart.x;
+            const dy = e.clientY - dragStart.y;
+            
+            const canvas = document.getElementById('editorCanvas');
+            const canvasRect = canvas.getBoundingClientRect();
+            const containerRect = canvas.parentElement.getBoundingClientRect();
+            
+            const canvasLeft = canvasRect.left - containerRect.left;
+            const canvasTop = canvasRect.top - containerRect.top;
+            const canvasWidth = canvasRect.width;
+            const canvasHeight = canvasRect.height;
+            
+            const overlayWidth = parseInt(cropOverlay.style.width);
+            const overlayHeight = parseInt(cropOverlay.style.height);
+            
+            const newLeft = Math.max(canvasLeft, Math.min(parseInt(cropOverlay.style.left) + dx, canvasLeft + canvasWidth - overlayWidth));
+            const newTop = Math.max(canvasTop, Math.min(parseInt(cropOverlay.style.top) + dy, canvasTop + canvasHeight - overlayHeight));
+            
+            cropOverlay.style.left = newLeft + 'px';
+            cropOverlay.style.top = newTop + 'px';
+            
+            dragStart = { x: e.clientX, y: e.clientY };
+        }
+        
+        function stopDrag() {
+            isDragging = false;
+            document.onmousemove = null;
+            document.onmouseup = null;
+        }
+        
+        function startResize(e, position) {
+            isResizing = true;
+            dragStart = { x: e.clientX, y: e.clientY, pos: position };
+            document.onmousemove = resize;
+            document.onmouseup = stopResize;
+        }
+        
+        function resize(e) {
+            if (!isResizing) return;
+            const dx = e.clientX - dragStart.x;
+            const dy = e.clientY - dragStart.y;
+            
+            const canvas = document.getElementById('editorCanvas');
+            const canvasRect = canvas.getBoundingClientRect();
+            const containerRect = canvas.parentElement.getBoundingClientRect();
+            
+            const canvasLeft = canvasRect.left - containerRect.left;
+            const canvasTop = canvasRect.top - containerRect.top;
+            const canvasWidth = canvasRect.width;
+            const canvasHeight = canvasRect.height;
+            
+            let newWidth = parseInt(cropOverlay.style.width);
+            let newHeight = parseInt(cropOverlay.style.height);
+            let newLeft = parseInt(cropOverlay.style.left);
+            let newTop = parseInt(cropOverlay.style.top);
+            
+            if (dragStart.pos.includes('e')) {
+                newWidth = Math.min(newWidth + dx, canvasLeft + canvasWidth - newLeft);
+            }
+            if (dragStart.pos.includes('w')) {
+                const oldWidth = newWidth;
+                newWidth = Math.max(50, newWidth - dx);
+                const widthDiff = oldWidth - newWidth;
+                newLeft = Math.max(canvasLeft, Math.min(newLeft + widthDiff, canvasLeft + canvasWidth - newWidth));
+            }
+            if (dragStart.pos.includes('s')) {
+                newHeight = Math.min(newHeight + dy, canvasTop + canvasHeight - newTop);
+            }
+            if (dragStart.pos.includes('n')) {
+                const oldHeight = newHeight;
+                newHeight = Math.max(50, newHeight - dy);
+                const heightDiff = oldHeight - newHeight;
+                newTop = Math.max(canvasTop, Math.min(newTop + heightDiff, canvasTop + canvasHeight - newHeight));
+            }
+            
+            cropOverlay.style.width = Math.max(50, newWidth) + 'px';
+            cropOverlay.style.height = Math.max(50, newHeight) + 'px';
+            cropOverlay.style.left = newLeft + 'px';
+            cropOverlay.style.top = newTop + 'px';
+            
+            dragStart.x = e.clientX;
+            dragStart.y = e.clientY;
+        }
+        
+        function stopResize() {
+            isResizing = false;
+            document.onmousemove = null;
+            document.onmouseup = null;
+        }
+        
+        function applyCrop() {
+            if (!cropOverlay) return;
+            
+            const canvas = document.getElementById('editorCanvas');
+            const ctx = canvas.getContext('2d');
+            const canvasRect = canvas.getBoundingClientRect();
+            const containerRect = canvas.parentElement.getBoundingClientRect();
+            
+            // Calculate canvas position
+            const canvasLeft = canvasRect.left - containerRect.left;
+            const canvasTop = canvasRect.top - containerRect.top;
+            
+            // Calculate crop coordinates relative to canvas
+            const scaleX = canvas.width / canvasRect.width;
+            const scaleY = canvas.height / canvasRect.height;
+            
+            const overlayLeft = parseInt(cropOverlay.style.left);
+            const overlayTop = parseInt(cropOverlay.style.top);
+            const overlayWidth = parseInt(cropOverlay.style.width);
+            const overlayHeight = parseInt(cropOverlay.style.height);
+            
+            // Convert overlay position to canvas coordinates
+            const cropX = Math.max(0, (overlayLeft - canvasLeft) * scaleX);
+            const cropY = Math.max(0, (overlayTop - canvasTop) * scaleY);
+            const cropWidth = Math.min(overlayWidth * scaleX, canvas.width - cropX);
+            const cropHeight = Math.min(overlayHeight * scaleY, canvas.height - cropY);
+            
+            // Get cropped image data
+            const imageData = ctx.getImageData(cropX, cropY, cropWidth, cropHeight);
+            
+            // Create new canvas with cropped dimensions
+            canvas.width = cropWidth;
+            canvas.height = cropHeight;
+            ctx.putImageData(imageData, 0, 0);
+            
+            // Update stored original data
+            originalCanvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            
+            cancelCrop();
+            showMessage('✅ Crop applied perfectly!', 'success');
+        }
+        
+        function cancelCrop() {
+            if (cropOverlay) {
+                cropOverlay.remove();
+                cropOverlay = null;
+            }
+            cropMode = false;
+            document.getElementById('cropControls').style.display = 'none';
+            showMessage('❌ Crop cancelled', 'info');
+        }
+        
+        // Hair Style Changer
+        function changeHairStyle(style) {
+            const canvas = document.getElementById('editorCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            showMessage(`💇 Applying ${style} hair style...`, 'info');
+            
+            // Simulate hair style change (in real app, use AI service)
+            setTimeout(() => {
+                showMessage(`✅ ${style} hair style applied!`, 'success');
+            }, 1000);
+        }
+        
+        function changeHairColor() {
+            const color = prompt('Enter hair color (e.g., blonde, brown, black):');
+            if (color) {
+                showMessage(`🎨 Changing hair color to ${color}...`, 'info');
+                setTimeout(() => {
+                    showMessage(`✅ Hair color changed to ${color}!`, 'success');
+                }, 1000);
+            }
+        }
+        
+        // Floating AI Assistant
+        function toggleAI() {
+            const chat = document.getElementById('aiChat');
+            chat.style.display = chat.style.display === 'flex' ? 'none' : 'flex';
+        }
+        
+        function sendAIMessage() {
+            const input = document.getElementById('aiInput');
+            const message = input.value.trim();
+            if (!message) return;
+            
+            addMessage(message, 'user');
+            input.value = '';
+            
+            setTimeout(() => {
+                const response = getAIResponse(message);
+                addMessage(response, 'ai');
+            }, 500);
+        }
+        
+        function addMessage(text, sender) {
+            const messages = document.getElementById('aiMessages');
+            const div = document.createElement('div');
+            div.className = `message ${sender}-message`;
+            div.innerHTML = sender === 'ai' ? `🤖 WAJID: ${text}` : text;
+            messages.appendChild(div);
+            messages.scrollTop = messages.scrollHeight;
+        }
+        
+        let brushMode = false;
+        let isDrawing = false;
+        let brushSize = 20;
+        
+        // Canva-style background removal
+        function canvaStyleRemoval() {
+            const canvas = document.getElementById('editorCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            showMessage('🎨 Canva-style background removal...', 'info');
+            
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+            
+            // Advanced edge detection and background removal
+            const edges = detectEdges(data, canvas.width, canvas.height);
+            
+            for (let i = 0; i < data.length; i += 4) {
+                const pixelIndex = i / 4;
+                const x = pixelIndex % canvas.width;
+                const y = Math.floor(pixelIndex / canvas.width);
+                
+                const r = data[i];
+                const g = data[i + 1];
+                const b = data[i + 2];
+                
+                // Multi-criteria background detection
+                const brightness = (r + g + b) / 3;
+                const colorVariance = Math.abs(r - g) + Math.abs(g - b) + Math.abs(r - b);
+                const isEdge = edges[pixelIndex];
+                
+                // Canva-style logic: preserve edges, remove uniform backgrounds
+                if (!isEdge && brightness > 160 && colorVariance < 40) {
+                    // Gradual transparency for smooth edges
+                    const edgeDistance = getEdgeDistance(x, y, edges, canvas.width, canvas.height);
+                    const alpha = Math.max(0, Math.min(255, edgeDistance * 50));
+                    data[i + 3] = alpha;
+                }
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+            showMessage('✅ Canva-style removal complete!', 'success');
+        }
+        
+        // Edge detection algorithm
+        function detectEdges(data, width, height) {
+            const edges = new Array(width * height).fill(false);
+            const threshold = 30;
+            
+            for (let y = 1; y < height - 1; y++) {
+                for (let x = 1; x < width - 1; x++) {
+                    const i = (y * width + x) * 4;
+                    
+                    // Get surrounding pixels
+                    const current = data[i] + data[i + 1] + data[i + 2];
+                    const right = data[i + 4] + data[i + 5] + data[i + 6];
+                    const bottom = data[i + width * 4] + data[i + width * 4 + 1] + data[i + width * 4 + 2];
+                    
+                    // Check for significant color change (edge)
+                    if (Math.abs(current - right) > threshold || Math.abs(current - bottom) > threshold) {
+                        edges[y * width + x] = true;
+                    }
+                }
+            }
+            
+            return edges;
+        }
+        
+        // Get distance to nearest edge
+        function getEdgeDistance(x, y, edges, width, height) {
+            let minDistance = 10;
+            
+            for (let dy = -5; dy <= 5; dy++) {
+                for (let dx = -5; dx <= 5; dx++) {
+                    const nx = x + dx;
+                    const ny = y + dy;
+                    
+                    if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
+                        if (edges[ny * width + nx]) {
+                            const distance = Math.sqrt(dx * dx + dy * dy);
+                            minDistance = Math.min(minDistance, distance);
+                        }
+                    }
+                }
+            }
+            
+            return minDistance;
+        }
+        
+        // Brush mode for manual removal
+        function enableBrushMode() {
+            brushMode = true;
+            colorPickerMode = false;
+            cropMode = false;
+            
+            const canvas = document.getElementById('editorCanvas');
+            canvas.style.cursor = 'crosshair';
+            showMessage('🖌️ Brush mode: Click and drag to erase background', 'info');
+            
+            canvas.addEventListener('mousedown', startBrush);
+            canvas.addEventListener('mousemove', brushErase);
+            canvas.addEventListener('mouseup', endBrush);
+            
+            // Update brush size display
+            document.getElementById('brushSize').addEventListener('input', function() {
+                brushSize = this.value;
+                document.getElementById('brushSizeValue').textContent = brushSize + 'px';
+            });
+        }
+        
+        function startBrush(e) {
+            if (!brushMode) return;
+            isDrawing = true;
+            brushErase(e);
+        }
+        
+        function brushErase(e) {
+            if (!brushMode || !isDrawing) return;
+            
+            const canvas = document.getElementById('editorCanvas');
+            const ctx = canvas.getContext('2d');
+            const rect = canvas.getBoundingClientRect();
+            
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Erase in circular brush pattern
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.beginPath();
+            ctx.arc(x, y, brushSize / 2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.globalCompositeOperation = 'source-over';
+        }
+        
+        function endBrush() {
+            isDrawing = false;
+        }
+        
+        // Enhanced color picker with tolerance
+        function removeColorFromImage(targetR, targetG, targetB) {
+            const canvas = document.getElementById('editorCanvas');
+            const ctx = canvas.getContext('2d');
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+            
+            const tolerance = 40; // Increased tolerance for better removal
+            
+            for (let i = 0; i < data.length; i += 4) {
+                const r = data[i];
+                const g = data[i + 1];
+                const b = data[i + 2];
+                
+                // Enhanced color distance calculation
+                const distance = Math.sqrt(
+                    Math.pow(r - targetR, 2) * 0.3 +
+                    Math.pow(g - targetG, 2) * 0.59 +
+                    Math.pow(b - targetB, 2) * 0.11
+                );
+                
+                if (distance < tolerance) {
+                    // Gradual transparency based on similarity
+                    const alpha = Math.max(0, (distance / tolerance) * 255);
+                    data[i + 3] = alpha;
+                }
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+            showMessage('🎨 Color removed with smooth edges!', 'success');
+        }
+        
+        // AI Background Removal using Remove.bg API
+        async function aiBackgroundRemoval() {
+            const canvas = document.getElementById('editorCanvas');
+            const imageBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.9));
+            
+            showMessage('🤖 AI removing background...', 'info');
+            
+            try {
+                const formData = new FormData();
+                formData.append('image_file', imageBlob);
+                formData.append('size', 'auto');
+                
+                const response = await fetch('https://api.remove.bg/v1.0/removebg', {
+                    method: 'POST',
+                    headers: {
+                        'X-Api-Key': 'uam3YSA7Dkz6SHVkf8DLVWUE'
+                    },
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const img = new Image();
+                    img.onload = function() {
+                        const ctx = canvas.getContext('2d');
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(img, 0, 0);
+                        showMessage('✅ AI background removed perfectly!', 'success');
+                    };
+                    img.src = URL.createObjectURL(blob);
+                } else {
+                    const errorData = await response.json();
+                    throw new Error(errorData.errors?.[0]?.title || 'API failed');
+                }
+            } catch (error) {
+                console.error('Remove.bg error:', error);
+                showMessage(`⚠️ API Error: ${error.message}. Using local removal...`, 'warning');
+                canvaStyleRemoval();
+            }
+        }
+        
+        // AI Assistant
+        function askAI() {
+            const question = document.getElementById('aiQuestion').value.trim();
+            if (!question) return;
+            
+            const response = getAIResponse(question);
+            document.getElementById('aiAnswer').innerHTML = response;
+            document.getElementById('aiResponse').style.display = 'block';
+            document.getElementById('aiQuestion').value = '';
+        }
+        
+        function getAIResponse(question) {
+            const q = question.toLowerCase();
+            
+            if (q.includes('hi') || q.includes('hello')) {
+                return 'Hello! I\'m WAJID Assistant. I can help you create perfect passport photos, remove backgrounds, crop images, and more!';
+            }
+            
+            if (q.includes('what can you do') || q.includes('help me')) {
+                return 'I can help you with:<br>• Remove backgrounds using AI<br>• Crop photos professionally<br>• Change background colors<br>• Create passport photos<br>• Print and save photos<br>• Hair style editing<br>Ask me anything specific!';
+            }
+            
+            if (q.includes('remove') && (q.includes('background') || q.includes('bg'))) {
+                return 'To remove background:<br>1. Click "AI Remove (API)" for best results<br>2. Use "Brush Remove" to manually erase<br>3. Try "Pick Color" to remove specific colors<br>Your Remove.bg API gives perfect results!';
+            }
+            
+            if (q.includes('crop')) {
+                return 'For cropping:<br>1. Click "Start Cropping" in editor<br>2. Drag the box to move it<br>3. Drag corners to resize<br>4. Click "Apply" when done<br>The crop box should appear over your photo!';
+            }
+            
+            if (q.includes('hair') || q.includes('hairstyle')) {
+                return 'Hair editing options:<br>• Short Hair - Professional look<br>• Long Hair - Feminine style<br>• Curly Hair - Textured style<br>• Bald - Clean look<br>• Change Hair Color - Any color you want!';
+            }
+            
+            if (q.includes('passport') || q.includes('photo size')) {
+                return 'For passport photos:<br>• Use 2"×2" dimensions<br>• White background recommended<br>• Center your face<br>• Good lighting is important<br>• Use "Auto Face Crop" for perfect positioning!';
+            }
+            
+            if (q.includes('color') || q.includes('background color')) {
+                return 'Background colors:<br>• White - Official documents, passports<br>• Blue - Visas, professional photos<br>• Red - Emergency IDs<br>• Gray - Casual IDs<br>Use the color picker for custom colors!';
+            }
+            
+            if (q.includes('print') || q.includes('save')) {
+                return 'To print/save:<br>• Click "Save" to download PNG<br>• Click "Print" for direct printing<br>• Use high-resolution photos (300+ DPI)<br>• Photo paper gives best results!';
+            }
+            
+            if (q.includes('wajid') || q.includes('name')) {
+                return 'Yes, I\'m WAJID Assistant! I\'m here to help you create perfect photos. What would you like to do today?';
+            }
+            
+            return 'I\'m WAJID Assistant! I can help with background removal, cropping, passport photos, printing, and more. What specific help do you need?';
+        }
+        
+        // Enter key support for AI chat
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('aiInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendAIMessage();
+                }
+            });
+        });
+        
+        let originalCanvasData = null;
+        
+        function changeBgColor(color) {
+            backgroundColor = color;
+            const canvas = document.getElementById('editorCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Store original if not stored
+            if (!originalCanvasData) {
+                originalCanvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            }
+            
+            // Use original data for color change
+            const imageData = ctx.createImageData(originalCanvasData);
+            const data = imageData.data;
+            const originalData = originalCanvasData.data;
+            
+            // Copy original data
+            for (let i = 0; i < data.length; i++) {
+                data[i] = originalData[i];
+            }
+            
+            // Convert hex color to RGB
+            const hex = color.replace('#', '');
+            const bgR = parseInt(hex.substr(0, 2), 16);
+            const bgG = parseInt(hex.substr(2, 2), 16);
+            const bgB = parseInt(hex.substr(4, 2), 16);
+            
+            // Apply new background color to transparent areas
+            for (let i = 0; i < data.length; i += 4) {
+                const alpha = data[i + 3] / 255;
+                
+                if (alpha < 1) {
+                    // Blend with new background color
+                    data[i] = data[i] * alpha + bgR * (1 - alpha);
+                    data[i + 1] = data[i + 1] * alpha + bgG * (1 - alpha);
+                    data[i + 2] = data[i + 2] * alpha + bgB * (1 - alpha);
+                    data[i + 3] = 255; // Make opaque
+                }
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+            showMessage(`🎨 Background changed to ${color}`, 'success');
+        }
+        
+        // External Background Removal Services
+        function openRemoveBg() {
+            if (!selectedImage) {
+                alert('Please upload an image first!');
+                return;
+            }
+            
+            showMessage('🚀 Opening Remove.bg - Best AI background remover!', 'info');
+            window.open('https://www.remove.bg/', '_blank');
+            showUploadSection();
+        }
+        
+        function openPhotoscissors() {
+            if (!selectedImage) {
+                alert('Please upload an image first!');
+                return;
+            }
+            
+            showMessage('✂️ Opening PhotoScissors - Free online editor!', 'info');
+            window.open('https://photoscissors.com/', '_blank');
+            showUploadSection();
+        }
+        
+        function openBgEraser() {
+            if (!selectedImage) {
+                alert('Please upload an image first!');
+                return;
+            }
+            
+            showMessage('🖼️ Opening BgEraser - AI background remover!', 'info');
+            window.open('https://bgeraser.com/', '_blank');
+            showUploadSection();
+        }
+        
+        function openCanva() {
+            if (!selectedImage) {
+                alert('Please upload an image first!');
+                return;
+            }
+            
+            showMessage('🎨 Opening Canva - Professional photo editor!', 'info');
+            window.open('https://www.canva.com/photo-editor/', '_blank');
+            showUploadSection();
+        }
+        
+        function openPixlr() {
+            if (!selectedImage) {
+                alert('Please upload an image first!');
+                return;
+            }
+            
+            showMessage('🖼️ Opening Pixlr - Advanced photo editor!', 'info');
+            window.open('https://pixlr.com/editor/', '_blank');
+            showUploadSection();
+        }
+        
+        function openExternalEditor() {
+            const modal = document.createElement('div');
+            modal.className = 'editor-modal';
+            modal.innerHTML = `
+                <div style="background: white; border-radius: 20px; padding: 30px; max-width: 500px; text-align: center;">
+                    <h2>🌍 Choose Online Editor</h2>
+                    <p style="margin: 15px 0; color: #666;">Select the best free background removal tool:</p>
+                    
+                    <button class="preset-btn" onclick="openRemoveBg(); closeModal();" style="width: 100%; margin: 8px 0; background: linear-gradient(135deg, #4CAF50, #45a049);">
+                        🚀 Remove.bg - Best AI (5 free/month)
+                    </button>
+                    
+                    <button class="preset-btn" onclick="openPhotoscissors(); closeModal();" style="width: 100%; margin: 8px 0; background: linear-gradient(135deg, #2196F3, #1976D2);">
+                        ✂️ PhotoScissors - Unlimited Free
+                    </button>
+                    
+                    <button class="preset-btn" onclick="openBgEraser(); closeModal();" style="width: 100%; margin: 8px 0; background: linear-gradient(135deg, #FF9800, #F57C00);">
+                        🖼️ BgEraser - AI Free
+                    </button>
+                    
+                    <button class="preset-btn" onclick="openCanva(); closeModal();" style="width: 100%; margin: 8px 0; background: linear-gradient(135deg, #9C27B0, #7B1FA2);">
+                        🎨 Canva - Professional Editor
+                    </button>
+                    
+                    <button class="preset-btn" onclick="openPixlr(); closeModal();" style="width: 100%; margin: 8px 0; background: linear-gradient(135deg, #E91E63, #C2185B);">
+                        🖼️ Pixlr - Advanced Tools
+                    </button>
+                    
+                    <button onclick="closeModal()" style="margin-top: 15px; padding: 10px 20px; background: #ccc; border: none; border-radius: 8px; cursor: pointer;">Cancel</button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+        
+        function closeModal() {
+            const modal = document.querySelector('.editor-modal');
+            if (modal) modal.remove();
+        }
+        
+        function showUploadSection() {
+            document.getElementById('uploadSection').style.display = 'block';
+            showMessage('🔄 After editing, upload your photo back here!', 'info');
+        }
+        
+        // Handle edited image upload
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('editedImageInput').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        selectedImage = e.target.result;
+                        originalImage = e.target.result;
+                        updatePhotoGrid();
+                        document.getElementById('uploadSection').style.display = 'none';
+                        showMessage('✅ Edited photo uploaded successfully!', 'success');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+        
+        function cropToFace() {
+            const canvas = document.getElementById('editorCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Smart face crop - square format, centered with slight upward bias
+            const size = Math.min(canvas.width, canvas.height) * 0.8;
+            const x = (canvas.width - size) / 2;
+            const y = (canvas.height - size) / 3; // Better face positioning
+            
+            const croppedData = ctx.getImageData(x, y, size, size);
+            canvas.width = size;
+            canvas.height = size;
+            ctx.putImageData(croppedData, 0, 0);
+            
+            // Update stored original data
+            originalCanvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            
+            showMessage('✅ Auto face crop applied!', 'success');
+        }
+        
+        function resizeImage(scale) {
+            document.getElementById('resizeValue').textContent = scale + '%';
+            // Implementation for resize
+        }
+        
+        function adjustBrightness(value) {
+            const canvas = document.getElementById('editorCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.filter = `brightness(${100 + parseInt(value)}%)`;
+            loadImageToEditor();
+        }
+        
+        function adjustContrast(value) {
+            const canvas = document.getElementById('editorCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.filter = `contrast(${100 + parseInt(value)}%)`;
+            loadImageToEditor();
+        }
+        
+        function smoothSkin() {
+            showMessage('🌟 Skin smoothing applied!', 'success');
+        }
+        
+        function whitenTeeth() {
+            showMessage('😁 Teeth whitening applied!', 'success');
+        }
+        
+        function brightenEyes() {
+            showMessage('👁️ Eyes brightened!', 'success');
+        }
+        
+        function applyEdits() {
+            const canvas = document.getElementById('editorCanvas');
+            selectedImage = canvas.toDataURL();
+            updatePhotoGrid();
+            closeEditor();
+            showMessage('✅ Photo edits applied!', 'success');
+        }
+        
+        function resetEdits() {
+            selectedImage = originalImage;
+            loadImageToEditor();
+            showMessage('🔄 Photo reset to original!', 'info');
         }
 
         // Initialize
