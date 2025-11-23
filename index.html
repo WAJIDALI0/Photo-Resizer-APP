@@ -1926,11 +1926,7 @@
             canvas.addEventListener('mousemove', brushErase);
             canvas.addEventListener('mouseup', endBrush);
             
-            // Update brush size display
-            document.getElementById('brushSize').addEventListener('input', function() {
-                brushSize = this.value;
-                document.getElementById('brushSizeValue').textContent = brushSize + 'px';
-            });
+            // Brush size will be handled in editor modal
         }
         
         function startBrush(e) {
@@ -2091,11 +2087,14 @@
         
         // Enter key support for AI chat
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('aiInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    sendAIMessage();
-                }
-            });
+            const aiInput = document.getElementById('aiInput');
+            if (aiInput) {
+                aiInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        sendAIMessage();
+                    }
+                });
+            }
         });
         
         let originalCanvasData = null;
@@ -2244,22 +2243,17 @@
             showMessage('🔄 After editing, upload your photo back here!', 'info');
         }
         
-        // Handle edited image upload
+        // Handle edited image upload (removed - element doesn't exist)
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('editedImageInput').addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        selectedImage = e.target.result;
-                        originalImage = e.target.result;
-                        updatePhotoGrid();
-                        document.getElementById('uploadSection').style.display = 'none';
-                        showMessage('✅ Edited photo uploaded successfully!', 'success');
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
+            // Initialize brush size display
+            const brushSizeSlider = document.getElementById('brushSize');
+            const brushSizeValue = document.getElementById('brushSizeValue');
+            if (brushSizeSlider && brushSizeValue) {
+                brushSizeSlider.addEventListener('input', function() {
+                    brushSize = this.value;
+                    brushSizeValue.textContent = brushSize + 'px';
+                });
+            }
         });
         
         function cropToFace() {
