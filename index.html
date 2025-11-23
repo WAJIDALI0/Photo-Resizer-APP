@@ -352,14 +352,39 @@
         }
 
         @media (max-width: 768px) {
-            .container { padding: 15px; }
-            .section { padding: 20px; margin: 15px 0; }
-            .custom-size { flex-direction: column; gap: 15px; }
-            .action-buttons { flex-direction: column; align-items: center; }
-            .action-btn { width: 100%; max-width: 300px; }
-            .header h1 { font-size: 2rem; }
-            .preset-buttons { grid-template-columns: 1fr; }
-            .color-buttons { grid-template-columns: repeat(2, 1fr); }
+            .container { padding: 10px; }
+            .section { padding: 15px; margin: 10px 0; }
+            .section h2 { font-size: 1.2rem; }
+            .custom-size { flex-direction: column; gap: 10px; }
+            .action-buttons { flex-direction: column; align-items: center; gap: 10px; }
+            .action-btn { width: 100%; max-width: 280px; padding: 12px 20px; font-size: 14px; }
+            .header { padding: 20px 15px; }
+            .header h1 { font-size: 1.8rem; }
+            .header p { font-size: 1rem; }
+            .preset-buttons { grid-template-columns: 1fr; gap: 10px; }
+            .preset-btn { padding: 12px 15px; font-size: 13px; }
+            .color-buttons { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .color-btn { padding: 12px 8px; font-size: 11px; }
+            .count-buttons { gap: 8px; }
+            .count-btn { padding: 8px 12px; font-size: 12px; min-width: 40px; }
+            .photo-grid { padding: 15px; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); }
+            .photo-item { min-height: 70px; }
+            .info { font-size: 14px; padding: 12px; }
+            .file-input { padding: 15px; font-size: 14px; }
+        }
+        
+        @media (max-width: 480px) {
+            .container { padding: 8px; }
+            .section { padding: 12px; margin: 8px 0; }
+            .header h1 { font-size: 1.5rem; }
+            .header p { font-size: 0.9rem; }
+            .preset-btn { padding: 10px 12px; font-size: 12px; }
+            .color-btn { padding: 10px 6px; font-size: 10px; }
+            .count-btn { padding: 6px 10px; font-size: 11px; min-width: 35px; }
+            .action-btn { padding: 10px 15px; font-size: 13px; }
+            .photo-grid { grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); }
+            .photo-item { min-height: 60px; }
+            .custom-size input { padding: 10px 12px; font-size: 14px; }
         }
 
         .loading {
@@ -427,6 +452,26 @@
             position: relative;
             display: flex;
             gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .editor-content {
+                flex-direction: column;
+                width: 98vw;
+                height: 95vh;
+                padding: 15px;
+                gap: 15px;
+            }
+            .editor-left, .editor-right {
+                flex: none;
+            }
+            .editor-right {
+                padding: 15px;
+                max-height: 40vh;
+            }
+            .editor-canvas {
+                max-height: 40vh;
+            }
         }
 
         .editor-left {
@@ -525,6 +570,32 @@
             box-shadow: 0 8px 30px rgba(0,0,0,0.2);
             display: none;
             flex-direction: column;
+        }
+        
+        @media (max-width: 768px) {
+            .ai-chat {
+                width: 300px;
+                height: 350px;
+                right: -10px;
+            }
+            .ai-button {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .ai-chat {
+                width: 280px;
+                height: 300px;
+                right: -20px;
+            }
+            .ai-button {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
         }
         
         .ai-header {
