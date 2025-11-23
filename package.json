@@ -1,0 +1,8 @@
+{
+  "name": "photo-resizer-app",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "npx http-server . -p 3000 -o",
+    "dev": "npx http-server . -p 3000 -o"
+  }
+}

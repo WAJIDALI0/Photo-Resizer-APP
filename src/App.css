@@ -1,0 +1,270 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.App {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.header {
+  background: linear-gradient(135deg, #2196F3, #1976D2);
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.header h1 {
+  font-size: 2rem;
+  margin-bottom: 5px;
+}
+
+.header p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.section {
+  background: white;
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.section h2 {
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 1.3rem;
+}
+
+/* File Input */
+.file-input {
+  width: 100%;
+  padding: 15px;
+  border: 2px dashed #2196F3;
+  border-radius: 8px;
+  background: #f8f9fa;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.file-input:hover {
+  background: #e3f2fd;
+}
+
+/* Preset Buttons */
+.preset-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.preset-btn {
+  padding: 12px;
+  background: #FF9800;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.preset-btn:hover {
+  background: #F57C00;
+}
+
+/* Custom Size */
+.custom-size {
+  display: flex;
+  gap: 20px;
+  border-top: 1px solid #eee;
+  padding-top: 15px;
+}
+
+.custom-size label {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  font-weight: 500;
+}
+
+.custom-size input {
+  margin-top: 5px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+/* Color Buttons */
+.color-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 10px;
+}
+
+.color-btn {
+  padding: 12px;
+  border: 3px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.color-btn.selected {
+  border-color: #000;
+  transform: scale(1.05);
+}
+
+.color-btn:hover {
+  transform: scale(1.02);
+}
+
+/* Count Buttons */
+.count-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.count-btn {
+  padding: 10px 15px;
+  background: #e0e0e0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.count-btn.selected {
+  background: #2196F3;
+  color: white;
+}
+
+.count-btn:hover {
+  background: #bdbdbd;
+}
+
+.count-btn.selected:hover {
+  background: #1976D2;
+}
+
+/* Photo Grid */
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 10px;
+  padding: 20px;
+  background: #f0f0f0;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.photo-item {
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80px;
+  position: relative;
+}
+
+.photo-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-item span {
+  font-size: 10px;
+  color: #666;
+  text-align: center;
+}
+
+.info {
+  text-align: center;
+  color: #666;
+  font-weight: 500;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.action-btn {
+  padding: 15px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.print-btn {
+  background: #4CAF50;
+  color: white;
+}
+
+.print-btn:hover {
+  background: #45a049;
+}
+
+.share-btn {
+  background: #2196F3;
+  color: white;
+}
+
+.share-btn:hover {
+  background: #1976D2;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .container {
+    padding: 10px;
+  }
+  
+  .custom-size {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .photo-grid {
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+  }
+}
+
+/* Print Styles */
+@media print {
+  .header, .section:not(.section:has(.photo-grid)) {
+    display: none !important;
+  }
+  
+  .photo-grid {
+    background: white !important;
+    padding: 0 !important;
+  }
+}
