@@ -736,6 +736,10 @@
                     🤖 Auto remove background with AI
                 </label>
             </div>
+            <div id="imagePreview" style="display: none; margin-top: 20px; text-align: center;">
+                <h3 style="margin-bottom: 10px; color: #2d3748;">Your Photo:</h3>
+                <img id="previewImage" style="max-width: 300px; max-height: 300px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: 2px solid #e2e8f0;">
+            </div>
             <div id="editSection" style="display: none; margin-top: 20px; text-align: center;">
                 <button class="action-btn" style="background: linear-gradient(135deg, #4CAF50, #45a049); color: white; margin: 5px;" onclick="quickRemoveBackground()">🤖 Remove Background</button>
                 <button class="action-btn" style="background: linear-gradient(135deg, #9f7aea, #805ad5); color: white; margin: 5px;" onclick="openEditor()">✏️ Edit Photo</button>
@@ -2376,6 +2380,7 @@
         function applyEdits() {
             const canvas = document.getElementById('editorCanvas');
             selectedImage = canvas.toDataURL();
+            document.getElementById('previewImage').src = selectedImage;
             updatePhotoGrid();
             closeEditor();
             showMessage('✅ Photo edits applied!', 'success');
@@ -2430,6 +2435,7 @@
                                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                                 ctx.drawImage(apiImg, 0, 0);
                                 selectedImage = canvas.toDataURL();
+                                document.getElementById('previewImage').src = selectedImage;
                                 updatePhotoGrid();
                                 showMessage('✅ Background removed perfectly!', 'success');
                             };
@@ -2459,6 +2465,7 @@
                     
                     ctx.putImageData(imageData, 0, 0);
                     selectedImage = canvas.toDataURL();
+                    document.getElementById('previewImage').src = selectedImage;
                     updatePhotoGrid();
                     showMessage('✅ Background removed!', 'success');
                 };
